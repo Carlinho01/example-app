@@ -1,6 +1,11 @@
 Mostrar la lista de empleados :)
 <table class="table table-light">
 
+@if(Session::has('mensaje'))
+{{ Session::get('mensaje')}}
+
+@endif
+
     <thead class="thead-light">
         <tr>
             <th>#</th>
