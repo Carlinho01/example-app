@@ -1,4 +1,6 @@
-Mostrar la lista de empleados :)
+@extends('layouts.app')
+@section('content')
+<div class="container">
 
 @if(Session::has('mensaje'))
 {{ Session::get('mensaje')}}
@@ -6,8 +8,9 @@ Mostrar la lista de empleados :)
 @endif
 
 
-<a href="{{ url('empleado/create') }}">Registrar nuevo empleado</a>
-
+<a href="{{ url('empleado/create') }}" class="btn btn-success">Registrar nuevo empleado</a>
+<br>
+<br>
 <table class="table table-light">
 
     <thead class="thead-light">
@@ -28,7 +31,7 @@ Mostrar la lista de empleados :)
             <td>{{ $empleado->id }}</td>
 
             <td>
-            <img src="{{ asset('storage').'/'.$empleado->Foto }}" width="100" alt="">
+            <img class="img-thumbnail img-fluid"src="{{ asset('storage').'/'.$empleado->Foto }}" width="100" alt="">
             </td>
 
 
@@ -38,14 +41,14 @@ Mostrar la lista de empleados :)
             <td>{{ $empleado->Correo }}</td>
             <td>
 
-            <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}">
+            <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}" class="btn btn-warning">
                 Editar
             </a>
-            
-            <form action="{{ url('/empleado/'.$empleado->id) }}" method="post">
+            |
+            <form action="{{ url('/empleado/'.$empleado->id) }}" class="d-inline" method="post">
             @csrf
             {{method_field('DELETE')}}
-            <input type="submit" onclick="return confirm('¿Quieres borrar?')" 
+            <input classe="btn btn-danger" type="submit" onclick="return confirm('¿Quieres borrar?')" 
             value="Borrar" >
 
             </form>
@@ -60,3 +63,5 @@ Mostrar la lista de empleados :)
     </tbody>
 
 </table>
+</div>
+@endsection
