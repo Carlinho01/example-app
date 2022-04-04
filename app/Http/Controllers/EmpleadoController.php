@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +44,21 @@ class EmpleadoController extends Controller
     {
         //
         //$datosEmpleado = request()->all();
+        $campos=[
+            'Nombre'=>'required|string|max:100',
+            'ApellidoPaterno'=>'required|string|max:100',
+            'ApellidoMaterno'=>'required|string|max:100',
+            'Correo'=>'required|email',
+            'Foto'=>'required|max:10000|mimes:jpeg,png,jpg',
+        ];
+        $mensaje=[
+                'required'=>'El :attribute es requerido',
+                'Foto.required'=>'La foto es requerida'
+        ];
 
+        $this->validate($request, $campos,$mensaje);
+
+        //$datosEmpleado = request()->all();
         $datosEmpleado = request()->except('_token');
 
         if($request->hasFile('Foto')){
@@ -88,6 +103,24 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $campos=[
+            'Nombre'=>'required|string|max:100',
+            'ApellidoPaterno'=>'required|string|max:100',
+            'ApellidoMaterno'=>'required|string|max:100',
+            'Correo'=>'required|email',
+
+        ];
+        $mensaje=[
+                'required'=>'El :attribute es requerido',
+        ];
+
+        if($request->hasfile('Foto')){
+            $campos=['Foto'=>'required|max:10000|mimes:jpeg,png,jpg'];
+            $mensaje=['Foto.required'=>'La foto es requerida'];
+        }
+
+        $this->validate($request, $campos,$mensaje);
         //
         $datosEmpleado = request()->except(['_token','_method']);
 
